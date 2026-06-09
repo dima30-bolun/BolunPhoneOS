@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(BolunPhoneOS VERSION 0.2.0 LANGUAGES C CXX ASM_NASM)
+project(BolunPhoneOS VERSION 0.3.0 LANGUAGES C CXX ASM_NASM)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -18,6 +18,8 @@ target_include_directories(bolun_boot PUBLIC include)
 
 add_library(bolun_core STATIC
     src/kernel/c/bolun_kernel.c
+    src/kernel/c/bolun_memory.c
+    src/kernel/c/bolun_scheduler.c
     src/kernel/cpp/app_manager.cpp
     src/kernel/cpp/bolun_core_bridge.cpp
     src/kernel/cpp/messaging_service.cpp
