@@ -5,4 +5,5 @@ public sealed record AppModel(
     string Title,
     string Category,
     string Glyph,
-    ConsoleColor Accent);
+    ConsoleColor Accent,
+    bool DeveloperOnly = false);
