@@ -18,6 +18,7 @@ target_include_directories(bolun_boot PUBLIC include)
 
 add_library(bolun_core STATIC
     src/kernel/c/bolun_kernel.c
+    src/kernel/c/bolun_runtime.c
     src/kernel/cpp/app_manager.cpp
     src/kernel/cpp/bolun_core_bridge.cpp
     src/kernel/cpp/messaging_service.cpp
