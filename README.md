@@ -8,7 +8,7 @@ BolunPhoneOS is an original, clean-room educational phone operating-system proto
 
 - **C kernel API** in `src/kernel/c/` for boot, shutdown, app registry, launch, notifications, contacts, messaging, device profiles, the Bolun Phone 1.0 feature manifest, and Dima30 Store removed-a[...]
 - **C++ service layer** in `src/kernel/cpp/` for native app, tile, notification, people, and messaging services.
-- **Assembler HAL stubs** in `src/boot/asm/` for a boot banner, CPU probe flag, and interrupt placeholder.
+- **Assembler HAL routines** in `src/boot/asm/` for a boot banner, CPU probe flag, and interrupt placeholder.
 - **C# shell prototype** in `src/ui/csharp/BolunPhone.Shell/` that renders a Bolun lock screen, tile start screen, and all-apps list.
 - **CMake build** for the native C/C++/ASM core and tests.
 
@@ -16,7 +16,7 @@ BolunPhoneOS is an original, clean-room educational phone operating-system proto
 
 The native kernel now boots a Bolun Phone 1.0 catalog with:
 
-- Kernel services: process scheduler, multitasking, memory management, virtual memory, IPC, syscalls, timers, interrupts, power saving, and event logging.
+- Kernel services: process scheduler, multitasking, memory management, virtual memory, IPC, syscalls, timers, interrupts, power saving, event logging, sandbox permission checks, and fixed-capacity error handling.
 - Boot services: bootloader, Secure Boot, Recovery Mode, Fastboot-like mode, Developer Mode, OTA updates, and rollback metadata.
 - Hardware contracts: display, touch, buttons, haptics, motion sensors, proximity/light sensors, GPS, NFC, Bluetooth, Wi-Fi, cellular/SIM, USB, charging, battery, camera/flash, audio, headset jack[...]
 - Graphics and shell contracts: GPU acceleration, double buffering, 60 FPS animations, dark/light/adaptive themes, live tiles, widgets, and optional Always-On Display.
@@ -54,12 +54,22 @@ Dima30 Store removed-app policy is explicit: already-installed apps are not dele
 
 ```text
 include/bolun/                 Public C ABI headers
-src/boot/asm/                  Educational boot/HAL assembler stubs
+src/boot/asm/                  Educational boot/HAL assembler routines
 src/kernel/c/                  Kernel lifecycle, app catalog, device profile, feature manifest
 src/kernel/cpp/                Native service implementations
 src/ui/csharp/BolunPhone.Shell C# lock screen, start screen, app list demo
 tests/cpp/                     Native core tests
 ```
+
+## Runtime API smoke coverage
+
+The host-side tests now exercise the new runtime surface:
+
+- Creates a Lumia HAL profile and routes camera commands through `bolun_runtime_hal_write`.
+- Spawns sandboxed app processes and schedules them round-robin.
+- Enforces memory quotas, sends IPC messages, fires timers, handles interrupts, and records system logs.
+- Adds searchable virtual file records, validates integrity hashes, archives files, and moves deleted files to the trash.
+- Installs a signed `.bapp` package by parsing `Ben_open.txt` keys (`id`, `title`, `version`, `auto_update`).
 
 ## Build native core
 
