@@ -32,8 +32,65 @@ target_link_libraries(bolun_core PUBLIC bolun_boot)
 add_executable(bolun_demo src/kernel/c/bolun_demo.c)
 target_link_libraries(bolun_demo PRIVATE bolun_core)
 
+
+add_library(bolun_phone10 STATIC
+    boot/boot.c
+    kernel/kernel.c
+    hal/hal.c
+    drivers/drivers.c
+    mm/mm.c
+    fs/fs.c
+    net/net.c
+    security/security.c
+    ipc/ipc.c
+    scheduler/scheduler.c
+    power/power.c
+    graphics/graphics.c
+    display/display.c
+    audio/audio.c
+    camera/camera.c
+    input/input.c
+    storage/storage.c
+    services/services.c
+    framework/framework.c
+    shell/shell.c
+    sdk/sdk.c
+    apps/apps.c
+)
+target_include_directories(bolun_phone10 PUBLIC
+    boot
+    kernel
+    hal
+    drivers
+    mm
+    fs
+    net
+    security
+    ipc
+    scheduler
+    power
+    graphics
+    display
+    audio
+    camera
+    input
+    storage
+    services
+    framework
+    shell
+    sdk
+    apps
+    tests
+)
+
+add_executable(bolun_phone10_module_tests tests/bolun_phone10_module_tests.c)
+target_link_libraries(bolun_phone10_module_tests PRIVATE bolun_phone10)
+add_test(NAME bolun_phone10_module_tests COMMAND bolun_phone10_module_tests)
+
 if(BUILD_TESTING)
     add_executable(bolun_core_tests tests/cpp/bolun_core_tests.cpp)
     target_link_libraries(bolun_core_tests PRIVATE bolun_core)
     add_test(NAME bolun_core_tests COMMAND bolun_core_tests)
 endif()
+
+add_subdirectory(bolun-phone-1.0)

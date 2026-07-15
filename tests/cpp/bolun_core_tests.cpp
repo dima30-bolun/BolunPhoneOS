@@ -95,16 +95,16 @@ int main() {
 
     BolunRuntime *runtime = nullptr;
     BolunRuntimeConfig runtime_config = bolun_runtime_default_config();
-    runtime_config.device_codename = "lumia-950-xl";
+    runtime_config.device_codename = "lumia-710";
     runtime_config.developer_mode_enabled = 1;
     assert(bolun_runtime_create(&runtime_config, &runtime) == BOLUN_OK);
 
     BolunLumiaProfile lumias[BOLUN_MAX_LUMIA_PROFILES]{};
     std::size_t lumia_count = 0;
     assert(bolun_runtime_list_lumia_profiles(lumias, BOLUN_MAX_LUMIA_PROFILES, &lumia_count) == BOLUN_OK);
-    assert(lumia_count == 16);
-    assert(std::strcmp(lumias[0].codename, "lumia-625") == 0);
-    assert(std::strcmp(lumias[15].codename, "lumia-950-xl") == 0);
+    assert(lumia_count == 17);
+    assert(std::strcmp(lumias[0].codename, "lumia-710") == 0);
+    assert(std::strcmp(lumias[16].codename, "lumia-950-xl") == 0);
 
     BolunHalDeviceDescriptor devices[BOLUN_MAX_HAL_DEVICES]{};
     std::size_t device_count = 0;
@@ -112,7 +112,7 @@ int main() {
     assert(device_count >= 18);
     char hal_response[128]{};
     assert(bolun_runtime_hal_write(runtime, BOLUN_HAL_CAMERA, "capture photo hdr", hal_response, sizeof(hal_response)) == BOLUN_OK);
-    assert(std::strstr(hal_response, "bolun_lumia_camera") != nullptr);
+    assert(std::strstr(hal_response, "bolun_lumia710_camera") != nullptr);
 
     uint32_t phone_pid = 0;
     uint32_t ai_pid = 0;
