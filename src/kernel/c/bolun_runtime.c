@@ -125,6 +125,7 @@ static BolunResult register_device(BolunRuntime *runtime, BolunHalDeviceClass de
 }
 
 static const BolunLumiaProfile lumia_profiles[] = {
+    {"lumia-710", "Lumia 710", 0, 0, 0},
     {"lumia-625", "Lumia 625", 0, 1, 0},
     {"lumia-520", "Lumia 520", 0, 0, 0},
     {"lumia-525", "Lumia 525", 0, 0, 0},
@@ -523,12 +524,34 @@ BolunResult bolun_runtime_install_lumia_hal(BolunRuntime *runtime, const char *c
     if (runtime == NULL) {
         return BOLUN_ERROR_INVALID_ARGUMENT;
     }
-    const BolunLumiaProfile *profile = &lumia_profiles[14];
+    const BolunLumiaProfile *profile = &lumia_profiles[15];
     for (size_t index = 0; index < sizeof(lumia_profiles) / sizeof(lumia_profiles[0]); ++index) {
         if (codename != NULL && strcmp(lumia_profiles[index].codename, codename) == 0) {
             profile = &lumia_profiles[index];
             break;
         }
+    }
+    if (strcmp(profile->codename, "lumia-710") == 0) {
+        register_device(runtime, BOLUN_HAL_DISPLAY, "msm7227a-fb0", "bolun_lumia710_framebuffer", "MSM7227A framebuffer window", 1);
+        register_device(runtime, BOLUN_HAL_TOUCH, "msm7227a-touch0", "bolun_lumia710_touch", "Lumia 710 capacitive panel", 1);
+        register_device(runtime, BOLUN_HAL_BUTTONS, "msm7227a-gpio-keys", "bolun_lumia710_gpio_keys", "MSM7227A GPIO key matrix", 1);
+        register_device(runtime, BOLUN_HAL_HAPTICS, "msm7227a-vibrator0", "bolun_lumia710_haptics", "MSM7227A PWM haptics", 1);
+        register_device(runtime, BOLUN_HAL_AUDIO_OUT, "msm7227a-speaker0", "bolun_lumia710_speaker", "Lumia 710 speaker path", 1);
+        register_device(runtime, BOLUN_HAL_AUDIO_IN, "msm7227a-mic0", "bolun_lumia710_microphone", "Lumia 710 microphone path", 1);
+        register_device(runtime, BOLUN_HAL_CAMERA, "msm7227a-camera0", "bolun_lumia710_camera", "Lumia 710 rear camera", 1);
+        register_device(runtime, BOLUN_HAL_FLASH, "msm7227a-flash0", "bolun_lumia710_flash", "Lumia 710 camera flash", 1);
+        register_device(runtime, BOLUN_HAL_USB, "msm7227a-usb0", "bolun_lumia710_usb", "MSM7227A USB device", 1);
+        register_device(runtime, BOLUN_HAL_WIFI, "msm7227a-wifi0", "bolun_lumia710_wifi", "Lumia 710 Wi-Fi module", 1);
+        register_device(runtime, BOLUN_HAL_BLUETOOTH, "msm7227a-bt0", "bolun_lumia710_bluetooth", "Lumia 710 Bluetooth module", 1);
+        register_device(runtime, BOLUN_HAL_GPS, "msm7227a-gps0", "bolun_lumia710_gps", "Lumia 710 assisted location", 1);
+        register_device(runtime, BOLUN_HAL_LTE, "msm7227a-modem0", "bolun_lumia710_cellular", "Lumia 710 3G cellular modem", 0);
+        register_device(runtime, BOLUN_HAL_SIM, "msm7227a-sim0", "bolun_lumia710_sim", "Lumia 710 SIM interface", 1);
+        register_device(runtime, BOLUN_HAL_BATTERY, "msm7227a-battery0", "bolun_lumia710_battery", "Lumia 710 battery gauge", 1);
+        register_device(runtime, BOLUN_HAL_CHARGING, "msm7227a-charger0", "bolun_lumia710_charging", "Lumia 710 charging path", 1);
+        register_device(runtime, BOLUN_HAL_SD_CARD, "msm7227a-storage0", "bolun_lumia710_internal_storage", "Lumia 710 internal storage", 1);
+        register_device(runtime, BOLUN_HAL_SENSOR, "msm7227a-sensors0", "bolun_lumia710_sensors", "Lumia 710 motion and light sensors", 1);
+        append_log(runtime, 1, "HAL", profile->display_name);
+        return BOLUN_OK;
     }
     register_device(runtime, BOLUN_HAL_DISPLAY, "display0", "bolun_lumia_display", profile->display_name, 1);
     register_device(runtime, BOLUN_HAL_TOUCH, "touch0", "bolun_lumia_touch", profile->display_name, 1);

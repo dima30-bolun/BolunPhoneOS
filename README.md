@@ -65,11 +65,19 @@ tests/cpp/                     Native core tests
 
 The host-side tests now exercise the new runtime surface:
 
-- Creates a Lumia HAL profile and routes camera commands through `bolun_runtime_hal_write`.
+- Creates a Lumia 710 HAL profile and routes camera commands through `bolun_runtime_hal_write`.
 - Spawns sandboxed app processes and schedules them round-robin.
 - Enforces memory quotas, sends IPC messages, fires timers, handles interrupts, and records system logs.
 - Adds searchable virtual file records, validates integrity hashes, archives files, and moves deleted files to the trash.
 - Installs a signed `.bapp` package by parsing `Ben_open.txt` keys (`id`, `title`, `version`, `auto_update`).
+
+## Build MainOS development image
+
+```bash
+python3 tools/mkmainos.py --output build/bolun-mainos.img boot=README.md docs=docs/bolun_phone_1_0_lumia_710.md
+```
+
+The image produced by `mkmainos.py` is a deterministic development package for Bolun bring-up planning; it does not alter a bootloader or write device partitions.
 
 ## Build native core
 

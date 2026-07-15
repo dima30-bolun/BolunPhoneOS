@@ -29,7 +29,7 @@ extern "C" {
 #define BOLUN_MAX_HAL_DEVICES 96
 #define BOLUN_MAX_FILES 128
 #define BOLUN_MAX_PACKAGES 64
-#define BOLUN_MAX_LUMIA_PROFILES 16
+#define BOLUN_MAX_LUMIA_PROFILES 24
 
 typedef struct BolunRuntime BolunRuntime;
 

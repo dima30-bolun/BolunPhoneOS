@@ -1,0 +1,3 @@
+image=bolun-mainos
+target=lumia-710
+components=boot,kernel,hal,drivers,mm,fs,net,security,ipc,scheduler,power,graphics,display,audio,camera,input,storage,services,framework,shell,sdk,apps
